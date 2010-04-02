@@ -1,0 +1,39 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: freetalk_gc
+  pool: 5
+  username: gameclub
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: CM_test
+  pool: 5
+  username: CM
+  password:
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: gameclub_production
+  pool: 5
+  username: gameclub
+  password:
+  
+dz:
+  adapter: mysql
+  database: www_gameclub_tw  
+  username: root
+  password: 
+  host: 127.0.0.1
+  charset: big5
+  reconnect: true
+  
+forum:
+  adapter: postgresql
+  database: gameclub_production
+  username: gameclub
+  password:
+  host: localhost

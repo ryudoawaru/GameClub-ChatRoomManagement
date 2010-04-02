@@ -1,0 +1,49 @@
+<div id="Search">
+<%form_tag(rooms_path, :method => :get) do%>
+	<table class="Search">
+    <tr>
+      <td align="right">名稱：</td>
+      <td><%=text_field(:match, :name)%></td>
+    </tr>
+    <tr>
+      <td align="right">代碼：</td>
+			<td><%=text_field(:match, :identify_code)%></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><%=submit_tag '查詢'%>&nbsp;</td>
+    </tr>
+  </table>
+<%end%>
+<%=button_to_function('開關', "$('div#Search form').toggle();")%>
+</div>
+<div class="Data">
+<%form_tag(modify_many_rooms_path, :method => :put) do %>
+	<%table_for(@rooms, :html => {:class => 'Rooms', :cellspacing => 0, :cellpadding => 0}) do |t|%>
+		<%t.head do%>
+			<%t.r do%>
+				<%=t.h(check_box_tag('CheckAll', 1, false, {:class => 'CheckAll'}))%>
+				<%=t.h("ID #{order_img('id','asc')} #{order_img('id','desc')}")%>
+				<%=t.h('名稱')%>
+				<%=t.h("訊息數 #{order_img('messages_count','asc')} #{order_img('messages_count','desc')}")%>
+				<%=t.h '表情'%>
+				<%=t.h('網站')%>
+				<%=t.h('辯識代碼')%>
+			<%end%>
+		<%end%>
+		<%t.body_with_index do |room, idx|%>
+			<%t.r do%>
+				<%=t.d(check_box_tag "checked_#{idx}", room.id, false, {:class => 'Select'})%>
+				<%=t.d(h(room.id))%>
+				<%=t.d(h(room.name), :class => 'Name')%>
+				<%=t.d(link_to(h(room.messages_count), room_messages_path(room)))%>
+				<%=t.d link_to(room.emotion_pictures.count.to_i, room_emotions_path(room)) %>
+				<%=t.d(link_to(h(room.forum.name),  url_for_forum(room.forum)))%>
+				<%=t.d(h(room.identify_code))%>
+			<%end%>
+		<%end%>
+	<%end%>
+	<p><%=will_paginate @rooms%></p>
+	<p><%=submit_tag 'Submit'%></p>
+<%end%>
+</div>

@@ -1,0 +1,81 @@
+<%content_for :additional_head_content do%>
+	<style>
+		a{text-decoration:none;}
+		div.SelectAction{
+			margin: 4pt 0;
+		}
+		th{
+			text-align:center;
+		}
+		td.MsgContent{
+			width: 50em;
+		}
+		td.CreatedAt{
+			width: 9em;
+			text-align: center;
+		}
+		th.SenderTitle{
+			width: 10em;
+		}
+		div#Search{
+			padding: 0 6pt;
+		}
+		table.Search tr td{
+			padding: 3pt 5pt;
+		}
+		form.button-to, form.button-to div{
+			display:inline;
+		}
+	</style>
+<%end%>
+<br/>
+<div id="Search">
+	<%form_tag(room_messages_path(@room), :method => :get) do%>
+		<table class="Search">
+			<tr>
+				<td align="right">UID：</td>
+				<td><%=text_field(:equal, :from_uid)%></td>
+			</tr>
+			<tr>
+				<td align="right">日期：</td>
+				<td><%=text_field_tag(:created_on, params[:created_on])%></td>
+			</tr>
+			<tr>
+				<td align="right">內容：</td>
+				<td><%=text_field_tag(:match_content, params[:match_content], :size => 60)%></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><%=submit_tag '查詢'%>&nbsp;</td>
+			</tr>
+		</table>
+	<%end%>
+	<%=button_to_function('開關', "$('div#Search form').toggle();")%>&nbsp;
+	<%=button_to '取消查詢條件', room_messages_path(@room), :method => :get%>
+</div>
+<div class="Data">
+<%form_tag(modify_many_room_messages_path(@room), :method => :put) do %>
+	<%table_for(@messages, :html => {:class => 'Rooms', :cellspacing => 0, :cellpadding => 0}) do |t|%>
+		<%t.head do%>
+			<%t.r do%>
+				<%=t.h(check_box_tag('CheckAll', 1, false, {:class => 'CheckAll'}))%>
+				<%=t.h("ID #{order_img('id','asc')} #{order_img('id','desc')}", :class => "", :style => 'width: 60pt;')%>
+				<%=t.h('時間')%>
+				<%=t.h('發言者', {:class => 'SenderTitle'})%>
+				<%=t.h('內容')%>
+			<%end%>
+		<%end%>
+		<%t.body_with_index do |msg, idx|%>
+			<%t.r do%>
+				<%=t.d(check_box_tag "checked_#{idx}", msg.id, false, {:class => 'Select'})%>
+				<%=t.d(h(msg.id), :align => 'center')%>
+				<%=t.d(sprintf('%s', link_to(msg.created_at.strftime('%m-%d %H:%M'), room_messages_path(@room, :created_on => msg.created_at.to_date.to_s))), {:class => 'CreatedAt'})%>
+				<%=t.d(link_to(h(msg.sender.blank? ? ('已被砍'):(msg.sender.username)), room_messages_path(@room, :equal => {:from_uid => msg.from_uid})))%>
+				<%=t.d(h(msg.content), {:class => 'MsgContent'})%>
+			<%end%>
+		<%end%>
+	<%end%>
+	<%=will_paginate @messages%>
+	<div class="SelectAction"><%=select_tag('ProcessAction', options_for_select([['刪除','delete']]))%>&nbsp;<%=submit_tag 'Submit'%></div>
+<%end%>
+</div>

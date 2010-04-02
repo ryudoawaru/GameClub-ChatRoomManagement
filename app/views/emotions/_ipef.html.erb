@@ -1,0 +1,10 @@
+<td>
+<%form_for emp, :url => room_emotion_path(room, emp), :html => {:methpd => :put} do |f|%>
+<%=f.text_field :key_code, :size => 5%>
+</td>
+<td>
+<%=image_tag emp.img_url, :class => 'Emp'%>
+<%=f.text_field :img_url, :size => 50%>
+<%=submit_tag '存檔'%>
+<%end%>
+</td>

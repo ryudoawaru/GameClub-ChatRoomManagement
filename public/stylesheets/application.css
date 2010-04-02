@@ -1,0 +1,77 @@
+	*{
+		margin:0;
+		padding:0;
+	}
+	body{
+		background-color:#333;
+		font-size: 10pt;
+	}
+	a img{border: 0;}
+	img.inline{display:inline;}
+	a.Hidden img{visibility:hidden;}
+	a.Show img{visibility:visible;}
+	a.ShowSort{
+		width: 5pt;
+		display:inline-block;
+	}
+	#navi-bar {
+		background-color:#CCCCCC;
+		background-position:center bottom;
+		color:#000000;
+		font-family:verdana,arial,helvetica;
+		font-size:12px;
+		overflow:hidden;
+		position:fixed;
+		top:0;
+		width:100%;
+		z-index:9999;
+		padding: 5pt 4pt;
+	}
+	div#Search{
+    padding: 0 6pt;
+  }
+  table.Search tr td{
+    padding: 3pt 5pt;
+  }
+	div#navi-bar a{
+		
+	}
+	div#ContentForLayout{
+		width: 980px;
+		margin:0 auto;
+		background-color: #fff;
+	}
+	table{
+		border-collapse: collapse;
+	}
+	div.Data{
+		padding: 10pt;
+	}
+	table.Rooms{
+		border-left:1px solid #D8D8D8;
+		border-right:1px solid #D8D8D8;
+		border-top:1px solid #D8D8D8;
+		font-family:Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+		width:auto;
+	}
+	table.Rooms thead th{
+		padding: 3pt;
+		
+		background-color:#EAEAEA;
+		border-bottom:1px solid #D8D8D8;
+		color:#999999;
+		font-weight:normal;
+		/*padding:0.5em 0.3em;
+		text-align:left;*/
+		
+	}
+	table.Rooms tbody td{
+		padding: 3pt;
+		/*background:url("/images/modules/browser/row_bg.png") repeat-x scroll 0 100% #F8F8F8;*/
+		border-bottom:1px solid #E1E1E1;
+		color:#484848;
+		padding:0.5em 0.3em;
+	}
+	table.Rooms tbody td.Name{
+		width: 30em;
+	}

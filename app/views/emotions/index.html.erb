@@ -1,0 +1,39 @@
+<%content_for :additional_head_content do%>
+<style>
+	img.Emp{width: 24px;}
+</style>
+<script>
+	$(document).ready(function(){
+		$('#new_emp_img_url').bind('change', function(){
+			if(this.value != ''){$('img#NewEmpImg').attr('src', this.value);}
+		});
+	});
+</script>
+<%end%>
+<div class="Data">
+<%form_tag(modify_many_room_emotions_path(@room), :method => :put) do %>
+	<%table_for(@emotions, :html => {:class => 'Rooms', :cellspacing => 0, :cellpadding => 0}) do |t|%>
+		<%t.head do%>
+			<%t.r do%>
+				<%=t.h(check_box_tag('CheckAll', 1, false, {:class => 'CheckAll'}))%>
+				<%=t.h("ID #{order_img('id','asc')} #{order_img('id','desc')}", :class => "", :style => 'width: 60pt;')%>
+				<%=t.h('代碼')%>
+				<%=t.h('圖')%>
+			<%end%>
+		<%end%>
+		<%t.body_with_index do |emp, idx|%>
+			<%t.r do%>
+				<%=t.d(check_box_tag 'emp[]', emp.id, false, {:class => 'Select'})%>
+				<%=t.d(h(emp.id), :align => 'center')%>
+				<%=render :partial => 'ipef', :locals => {:emp => emp, :room => @room}%>
+			<%end%>
+		<%end%>
+		<%t.r do%>
+			<td colspan="2">新增</td>
+			<%=render :partial => 'new', :locals => {:emp => @new_emp, :room => @room}%>
+		<%end%>
+	<%end%>
+	<%=will_paginate @emotions%>
+	<div class="SelectAction"><%=select_tag('ProcessAction', options_for_select([['刪除','delete']]))%>&nbsp;<%=submit_tag 'Submit'%></div>
+<%end%>
+</div>

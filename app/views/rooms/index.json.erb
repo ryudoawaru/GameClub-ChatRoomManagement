@@ -1,0 +1,11 @@
+<%=
+jd = @rooms.collect{|r|
+      {
+        :id => r.id,
+        :name => r.name,
+        :forum => link_to(r.forum.name, url_for_forum(r.forum)),
+        :identify_code => r.identify_code
+      }
+    }
+{:total => @rooms.total_entries, :rows => jd}.to_json
+%>
